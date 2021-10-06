@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# functions
+usage() {
+    echo "Open a VPN connection to the given host gateway url.
+Usage: connect [options...] <url>
+    -u  The VPN username
+    -p  The VPN password
+    exit 0;
+}
+
+while getopts ":u:p" arg; do
+    case $arg in
+        u)
+          USERNAME=${OPTARG}
+          ;;
+        p)
+          PASSWORD=${OPTARG}
+          ;;
+        *)
+          usage
+          ;;
+    esac
+done
+
+shift $((OPTIND-1))
+HOST=$1
+
+if [[ -z ${HOST} ]]; then
+    echo "Failure: no VPN gateway url provided"
+    exit 1
+fi
+
+if [[ -z ${USERNAME} ]]; then
+    echo "Failure: no VPN username provided"
+    exit 1
+fi
+
+if [[ -z ${PASSWORD} ]]; then
+    echo "Failure: no VPN password provided"
+    exit 1
+fi
+
+# shellcheck disable=SC1073
+bash -c "echo -n ${PASSWORD} | openconnect -u${USERNAME} --passwd-on-stdin --script-tun --script ${HOST}" &
+
+sleep 5
