@@ -6,6 +6,7 @@ usage() {
 Usage: connect [options...] <url>
     -u  The VPN username
     -p  The VPN password
+    -h  Usage
     exit 0;
     "
 }
@@ -42,6 +43,6 @@ if [[ -z ${PASSWORD} ]]; then
     exit 1
 fi
 
-bash -c "echo -n ${PASSWORD} | openconnect -u${USERNAME} --passwd-on-stdin --script-tun --script ${HOST}" &
+bash -c "echo -n ${PASSWORD} | openconnect -u${USERNAME} --passwd-on-stdin --script-tun ${HOST}" &
 
 sleep 5
