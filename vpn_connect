@@ -7,9 +7,10 @@ Usage: connect [options...] <url>
     -u  The VPN username
     -p  The VPN password
     exit 0;
+    "
 }
 
-while getopts ":u:p" arg; do
+while getopts ":u:p:h" arg; do
     case $arg in
         u)
           USERNAME=${OPTARG}
@@ -41,7 +42,6 @@ if [[ -z ${PASSWORD} ]]; then
     exit 1
 fi
 
-# shellcheck disable=SC1073
 bash -c "echo -n ${PASSWORD} | openconnect -u${USERNAME} --passwd-on-stdin --script-tun --script ${HOST}" &
 
 sleep 5
