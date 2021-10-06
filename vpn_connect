@@ -43,6 +43,6 @@ if [[ -z ${PASSWORD} ]]; then
     exit 1
 fi
 
-bash -c "echo -n ${PASSWORD} | openconnect -u${USERNAME} --passwd-on-stdin --script-tun --non-inter ${HOST}" &
+bash -c "echo -n ${PASSWORD} | openconnect -u${USERNAME} --passwd-on-stdin --script-tun --non-inter --script /usr/bin/vpn_script ${HOST}" &
 
 sleep 5
