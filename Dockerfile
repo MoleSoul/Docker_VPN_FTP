@@ -1,12 +1,12 @@
 FROM debian:buster-slim
 
-RUN apt-get update && apt-get install -y openconnect curl lsof procps && \
+RUN apt-get update && apt-get install -y openconnect ocproxy ftp curl wget lsof procps && \
     apt-get clean && \
     rm -rf /var/cache/apt/* && \
     rm -rf /var/lib/apt/lists/*
 
-COPY vpn_connect vpn_script /usr/bin/
-RUN chmod +x /usr/bin/vpn_connect & chmod +x /usr/bin/vpn_script
+COPY vpn_connect vpn_close vpn_script /usr/bin/
+RUN chmod +x /usr/bin/vpn_connect & chmod +x /usr/bin/vpn_script & chmod +x /usr/bin/vpn_close
 
 LABEL org.label-schema.schema-version="1.0" \
     org.label-schema.name="krtoslav/vpn_ftp" \
